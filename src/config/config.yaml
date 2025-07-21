@@ -1,0 +1,36 @@
+paths:
+  raw_data: "../data/raw"
+  processed_data: "../data/processed"
+
+params:
+  # Puedes usar rangos o listados explícitos
+  ts: # Training Strategy
+    train: "202207-202308"     # Ej "202207-202308" o "202207,202208,202209"
+    val: "202309-202403" # Ej "202207-202308" o "202207,202208,202209"
+    test: "202404"    # lista de un solo periodo
+
+  ts2: # Training Strategy Etapa 2
+    rws: 6 #Rolling Windows Size - Ej: 6 significa 6 meses de ventana temporal móvil
+
+  dr: #data drifting
+    columnas: ['limite_tc', 'limite_acc', 'deuda_tc', 'deuda_cc', 'deuda_prestamo', 'importe_pf', 'importe_ca']
+    tipo_ajuste: 'ipc'
+    ipc:
+      archivo: "../data/raw/sh_ipc_06_25.xls"  # Ruta al archivo de IPC
+      hoja: "Índices IPC Cobertura Nacional"
+    # uva:
+    #   archivo: "../data/raw/sh_uva_06_25.xls"  # Ruta al archivo de UVA
+    #   hoja: "Índices UVA Cobertura Nacional"
+      
+
+  fe: #Feature engineering
+    lags:
+      habilitar: True  # False para desactivar los lags
+      columnas: ['limite_tc', 'limite_acc', 'deuda_tc', 'deuda_cc', 'deuda_prestamo', 'importe_pf', 'importe_ca']  # Lista de columnas a las que aplicar lags
+      n_lags: 3  # Número de lags a aplicar
+    nulo:
+      columnas: ['limite_tc', 'limite_acc', 'deuda_tc', 'deuda_cc', 'deuda_prestamo', 'importe_pf', 'importe_ca']  # Lista de columnas a imputar valores nulos
+      metodo: ['mediana']  # Métodos para imputar valores nulos
+
+  
+
